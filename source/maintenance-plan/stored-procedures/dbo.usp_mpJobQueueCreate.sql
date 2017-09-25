@@ -374,6 +374,7 @@ WHILE @@FETCH_STATUS=0
 						/*-------------------------------------------------------------------*/
 						/* Daily: Update Statistics */
 						IF @flgActions & 128 = 128 AND NOT (@flgActions & 64 = 64) AND [dbo].[ufn_mpCheckTaskSchedulerForDate](@projectCode, 'dbo.usp_mpDatabaseOptimize', 'Update Statistics', GETDATE()) = 1
+						BEGIN
 								INSERT INTO @jobExecutionQueue (  [instance_id], [project_id], [module], [descriptor]
 																, [for_instance_id], [job_name], [job_step_name], [job_database_name]
 																, [job_command])
@@ -393,6 +394,7 @@ WHILE @@FETCH_STATUS=0
 												AND [name] NOT IN ('master', 'model', 'msdb', 'tempdb', 'distribution')														
 												AND [state_desc] IN  ('ONLINE')
 									)X
+						END
 					end
 
 				------------------------------------------------------------------------------------------------------------------------------------------
